@@ -26,9 +26,9 @@ jobs:
 
       - name: Montar site público
         run: |
-          mkdir -p _site/prompt_studio
+          mkdir -p _site
           cp index.html .nojekyll _site/
-          cp prompt_studio/app.js prompt_studio/styles.css prompt_studio/favicon.svg _site/prompt_studio/
+          cp app.js styles.css favicon.svg _site/
 
       - name: Enviar arquivos do site
         uses: actions/upload-pages-artifact@v4
