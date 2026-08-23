@@ -8,6 +8,6 @@ O projeto é publicado automaticamente no GitHub Pages após cada push para `mai
 
 ## Estrutura pública
 
-- `index.html`: entrada do GitHub Pages.
-- `prompt_studio/`: aplicação HTML, CSS, JavaScript e favicon.
+- `index.html`: aplicação e entrada direta do GitHub Pages.
+- `prompt_studio/`: JavaScript, CSS e favicon da aplicação.
 - `.github/workflows/deploy-pages.yml`: publicação automática.
