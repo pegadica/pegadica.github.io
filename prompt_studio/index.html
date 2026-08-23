@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#282a36">
+  <meta name="description" content="Prompt Studio Pro — gerador de prompts para imagens e vídeos de produtos.">
+  <title>Prompt Studio Pro</title>
+  <link rel="icon" href="./favicon.svg?v=3" type="image/svg+xml">
+  <link rel="shortcut icon" href="./favicon.svg?v=3">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">PS</div>
+        <div>
+          <h1>Prompt Studio Pro</h1>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button id="btnGenerateImage" class="primary">Gerar imagem</button>
+        <button id="btnGenerateVideo" class="primary">Gerar vídeo</button>
+        <button id="btnGenerateSpeech">Gerar fala</button>
+        <button id="btnCopyCurrent">Copiar prompt</button>
+        <button id="btnHistory" class="icon-button" title="Histórico">Histórico</button>
+        <button id="btnTemplates" class="icon-button" title="Templates">Templates</button>
+        <button id="btnReset">Reset</button>
+        <button id="btnClearAll" class="danger">Limpar tudo</button>
+        <label id="toolbarTakeField" class="toolbar-take-field" hidden>
+          Take atual
+          <select id="toolbarTakeSelect"></select>
+        </label>
+        <span id="statusPill" class="status-pill">Pronto</span>
+      </div>
+    </header>
+
+    <section class="ribbon">
+      <div class="ribbon-row">
+        <label>
+          Tema
+          <select id="themeSelect"></select>
+        </label>
+        <label>
+          Preset
+          <select id="productPreset"></select>
+        </label>
+        <label>
+          Modo
+          <select id="modeSelect">
+            <option>POV</option>
+            <option>Influencer</option>
+          </select>
+        </label>
+        <label id="productTypeField">
+          Tipo
+          <select id="productType">
+            <option value="external">Externo / objeto separado</option>
+            <option value="wearable">Interno / roupa ou item de vestir</option>
+          </select>
+        </label>
+        <label>
+          Duração por take
+          <input id="durationInput" type="number" min="1" step="1" value="10">
+        </label>
+        <label>
+          Estrutura de copy
+          <select id="copyStyleSelect"></select>
+        </label>
+        <label>
+          Takes do vídeo
+          <select id="takeCountSelect">
+            <option value="1">1 take</option>
+            <option value="2">2 takes</option>
+            <option value="3">3 takes</option>
+          </select>
+        </label>
+        <label>
+          Realismo
+          <select id="realismSelect">
+            <option>alto</option>
+            <option selected>muito alto</option>
+            <option>máximo</option>
+            <option>cinematográfico realista</option>
+          </select>
+        </label>
+      </div>
+
+      <details class="advanced-panel">
+        <summary>Configurações avançadas</summary>
+        <div class="advanced-grid">
+          <label>
+            Ambiente
+            <select id="environmentSelect"></select>
+          </label>
+          <label>
+            Público
+            <select id="audienceSelect"></select>
+          </label>
+          <label>
+            Estratégia
+            <select id="strategySelect"></select>
+          </label>
+          <label>
+            Gênero
+            <select id="genderSelect">
+              <option value="mulher">Mulher</option>
+              <option value="homem">Homem</option>
+            </select>
+          </label>
+          <label>
+            Aparência
+            <select id="ethnicitySelect"></select>
+          </label>
+          <label>
+            Idade
+            <select id="ageSelect"></select>
+          </label>
+          <label>
+            Corpo
+            <select id="bodySelect"></select>
+          </label>
+          <label>
+            Sotaque
+            <select id="accentSelect"></select>
+          </label>
+          <label>
+            Intensidade
+            <select id="accentIntensity">
+              <option>leve</option>
+              <option selected>marcado</option>
+              <option>forte natural</option>
+            </select>
+          </label>
+          <label>
+            Tom
+            <select id="toneSelect"></select>
+          </label>
+          <label>
+            CTA
+            <input id="ctaInput" type="text" value="confere no link">
+          </label>
+          <label>
+            Profissão
+            <select id="professionSelect"></select>
+          </label>
+          <label id="influencerPositionField">
+            Posição do influencer
+            <select id="influencerPositionSelect">
+              <option value="direita">Na direita do produto</option>
+              <option value="esquerda">Na esquerda do produto</option>
+              <option value="atras" selected>Atrás do produto</option>
+            </select>
+          </label>
+          <label id="influencerPostureField">
+            Postura do influencer
+            <select id="influencerPostureSelect">
+              <option value="em_pe" selected>Em pé</option>
+              <option value="agachado">Agachado</option>
+            </select>
+          </label>
+          <label>
+            Distância do produto
+            <select id="cameraDistanceSelect">
+              <option value="perto">Perto</option>
+              <option value="medio" selected>Médio</option>
+              <option value="longe">Longe</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="toggle-row">
+          <label><input id="includeCta" type="checkbox"> CTA no final</label>
+          <label><input id="noText" type="checkbox" checked> Sem texto visual</label>
+          <label><input id="preserveProduct" type="checkbox" checked> Preservar produto</label>
+          <label><input id="wholeProduct" type="checkbox" checked> Produto inteiro</label>
+          <label><input id="realHands" type="checkbox" checked> Mãos reais</label>
+          <label><input id="allowHand" type="checkbox" checked> Mão em POV</label>
+        </div>
+        <fieldset class="realism-options">
+          <legend>Detalhes de realismo humano</legend>
+          <label><input id="naturalSkin" type="checkbox" checked> Pele com textura e pequenas imperfeições</label>
+          <label><input id="naturalHair" type="checkbox" checked> Cabelo natural, com fios soltos</label>
+          <label><input id="wrinkledClothes" type="checkbox" checked> Roupa com dobras e costuras reais</label>
+          <label><input id="relaxedPosture" type="checkbox" checked> Expressão e postura relaxadas</label>
+          <label><input id="livedInEnvironment" type="checkbox"> Ambiente cotidiano levemente imperfeito</label>
+          <label><input id="phoneCapture" type="checkbox" checked> Captura autêntica de celular</label>
+          <label><input id="naturalLighting" type="checkbox" checked> Luz e exposição naturais</label>
+          <label><input id="naturalMotion" type="checkbox" checked> Microexpressões e gestos espontâneos</label>
+        </fieldset>
+        <div class="advanced-actions">
+          <button id="btnExportPrompt">Exportar prompt</button>
+          <button id="btnImportConfig">Importar configuração</button>
+          <button id="btnExportConfig">Exportar configuração</button>
+        </div>
+      </details>
+    </section>
+
+    <main class="workspace">
+      <section class="editor-panel">
+        <div class="panel-header">
+          <div>
+            <h2>Descrição do produto</h2>
+            <span id="descriptionStats">0 caracteres</span>
+          </div>
+          <div class="mini-actions">
+            <button id="btnPasteSample" title="Exemplo">Exemplo</button>
+            <button id="btnClearDescription" title="Limpar descrição">Limpar</button>
+          </div>
+        </div>
+        <textarea id="descriptionInput" spellcheck="true" placeholder="Descrição completa do produto"></textarea>
+      </section>
+
+      <section class="editor-panel">
+        <div class="panel-header">
+          <div>
+            <h2>Prompt gerado</h2>
+            <span id="outputStats">0 palavras</span>
+          </div>
+          <div class="prompt-tabs" id="promptTabs">
+            <button data-tab="image" class="active">Imagem</button>
+            <button data-tab="video">Vídeo</button>
+            <button data-tab="speech">Fala</button>
+          </div>
+        </div>
+        <textarea id="outputText" spellcheck="false"></textarea>
+      </section>
+    </main>
+
+  </div>
+
+  <dialog id="templateDialog" class="modal">
+    <form method="dialog" class="modal-card">
+      <div class="modal-header">
+        <div>
+          <h2>Templates</h2>
+        </div>
+        <button value="cancel" class="icon-button">Fechar</button>
+      </div>
+      <label>
+        Template
+        <select id="templateType">
+          <option value="image">Imagem</option>
+          <option value="video">Vídeo</option>
+          <option value="speech">Fala</option>
+        </select>
+      </label>
+      <textarea id="templateEditor" spellcheck="false"></textarea>
+      <div class="modal-actions">
+        <button id="btnTemplateDefault" type="button">Restaurar padrão</button>
+        <button id="btnTemplateSave" type="button" class="primary">Salvar template</button>
+      </div>
+    </form>
+  </dialog>
+
+  <dialog id="historyDialog" class="modal">
+    <form method="dialog" class="modal-card history-card">
+      <div class="modal-header">
+        <div>
+          <h2>Histórico</h2>
+        </div>
+        <button value="cancel" class="icon-button">Fechar</button>
+      </div>
+      <div class="history-toolbar">
+        <input id="historySearch" type="search" placeholder="Buscar no histórico">
+        <button id="btnClearHistory" type="button">Limpar histórico</button>
+      </div>
+      <div id="historyList" class="history-list"></div>
+    </form>
+  </dialog>
+
+  <input id="configFileInput" type="file" accept="application/json,.json" hidden>
+  <script src="app.js"></script>
+</body>
+</html>
