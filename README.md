@@ -1,13 +1,11 @@
-# Prompt Studio Pro
+# PegaDICA
 
-Gerador de prompts para imagens e vídeos de produtos, com estruturas de copy, vídeos de até três takes e controles de realismo.
+- `/`: escolha de estúdio.
+- `/shopee/`: editor completo original, com armazenamento local preservado.
+- `/tiktok/`: painel mobile com presets e cópia individual de imagem, vídeo ou pedido de roteiro.
 
-## Site
+TikTok usa armazenamento próprio. Os prompts são montados localmente, sem chamadas a IA. Anexe as imagens de referência na IA utilizada.
 
-O projeto é publicado automaticamente no GitHub Pages após cada push para `main`.
+Presets adaptados do PDF Liquidificador: referências repetidas unificadas e durações conflitantes normalizadas. Testes de resistência não comprovados e transformação por tinta com segunda referência não foram incluídos.
 
-## Estrutura pública
-
-- `index.html`: aplicação e entrada direta do GitHub Pages.
-- `app.js`, `styles.css` e `favicon.svg`: recursos da aplicação publicados diretamente na raiz.
-- `.github/workflows/deploy-pages.yml`: publicação automática.
+O workflow publica as duas pastas e a página inicial. Para testar: `python3 -m http.server 8765` na raiz.
